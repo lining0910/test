@@ -1,0 +1,9 @@
+common.portal.dictionary.properties.url=http://portal.51taole.cn/taole-portal-service/service/rest/tk.Dictionary/%s/retrieve
+
+generate.return.code.path=D:\apache-tomcat-7.0.63\webapps\member-service
+#generate.return.code.path=/data/tom_taole3/webapps/returnCode
+
+tk.file.nfs.download.url=http://39.104.69.184:81/member/
+tk.file.nfs.upload.url=/etc/httpd/member
+tk.file.nfs.avatar.path=/image/avatar/
+

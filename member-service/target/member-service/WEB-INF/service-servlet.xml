@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/aop
+      	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd" default-lazy-init="false">
+	
+	<mvc:annotation-driven>
+		<mvc:return-value-handlers>
+			<bean class="com.taole.framework.support.ObjectMethodReturnValueHandler" />
+		</mvc:return-value-handlers>
+	</mvc:annotation-driven>
+	
+	<!-- <mvc:interceptors>
+		<bean class="com.taole.cms.web.interceptor.CommonModelInterceptor"/>
+	</mvc:interceptors> -->
+	
+	<context:component-scan base-package="com.taole.framework.rest" />
+	<context:component-scan base-package="com.taole.member.service">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+	<import resource="swagger2.xml"/>
+	
+	<bean id="freemarkerConfigurer" class="com.taole.framework.template.FreeMarkerConfigurer">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="filesystemRoot" ref="filesystem.root"/>
+		<property name="templateLoaderPath" value="/"/>
+		<property name="preTemplateLoaders">
+			<list>
+				<bean class="com.taole.framework.template.StringProtocolFreeMarkerTemplateLoader"/>
+				<bean class="com.taole.framework.template.ClasspathProtocolFreeMarkerTemplateLoader"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="contentType" value="text/html; charset=UTF-8"/>
+	</bean>
+	
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+
+	
+	<!-- 配置成注解方式寻找要被代理的对象 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
+</beans>
